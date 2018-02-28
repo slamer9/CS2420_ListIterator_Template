@@ -39,9 +39,15 @@ List<T>::List()
 }
 
 template <class T>
-List<T>::~List()
+List<T>::~List()    //Free memory
 {
-    //delete stuff              //FIXME
+    Node<T>* temp;
+    while(this->head != nullptr)
+    {
+        temp = this->head;
+        this->head = this->head->next;
+        delete temp;
+    }
 }
 
 template <class T>

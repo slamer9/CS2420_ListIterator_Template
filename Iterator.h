@@ -38,7 +38,6 @@ Iterator<T>::Iterator(Node<T>* start)
 template <class T>
 Iterator<T>::~Iterator()   //FIXME
 {
-    //delete this->at;
 }
 
 template <class T>
