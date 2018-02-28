@@ -51,25 +51,25 @@ List<T>::~List()    //Free memory
 }
 
 template <class T>
-void List<T>::push_front(const T& value) //FIXME
+void List<T>::push_front(const T& value)
 {
     Node<T>* temp = new Node<T>(value);
     temp->next = this->head;
     if(this->head != nullptr)
     {
         this->head->previous = temp;
+        this->head = temp;
     }
     else
     {
+        this->head = temp;
         this->tail = this->head;
     }
-    this->head = temp;
-
     this->listSize++;
 }
 
 template <class T>
-void List<T>::push_back(const T& value)  //FIXME
+void List<T>::push_back(const T& value)
 {
     if(this->head == nullptr)
     {
@@ -78,23 +78,25 @@ void List<T>::push_back(const T& value)  //FIXME
         this->listSize++;
         return;
     }
-    Node<T>* temp = this->head;
-    while(temp->next != nullptr)
-    {
-        if(DEBUG)
-        {
-            if(temp == nullptr)
-            {
-                cout << "You messed up" << endl;    //do something more usefull if we use this again
-            }
-            //cout << temp->next->data << endl;
-        }
-        temp = temp->next;
-    }
-    temp->next = new Node<T>(value);
-    temp->next->previous = temp;
+    //Node<T>* temp = this->head;
+    // while(temp->next != nullptr) //I have a tail member, this is not very efficient
+    // {
+    //     if(DEBUG)
+    //     {
+    //         if(temp == nullptr)
+    //         {
+    //             cout << "You messed up" << endl;    //do something more usefull if we use this again
+    //         }
+    //         //cout << temp->next->data << endl;
+    //     }
+    //     temp = temp->next;
+    // }
 
-    this->tail = temp->next;
+    this->tail->next = new Node<T>(value);
+    this->tail->next->previous = this->tail;
+
+    this->tail = this->tail->next;  //Move tail ptr
+
     this->listSize++;
     return;
 }
@@ -128,7 +130,7 @@ void List<T>::remove(const T& value)     //FIXME
             check = check->next;                        //
             delete temp;                                //
 
-            this->listSize--;                           //Change size
+            this->listSize--;                           //decrement size
         }
         else
         {
@@ -144,9 +146,9 @@ Iterator<T> List<T>::begin()
 }
 
 template <class T>
-Iterator<T> List<T>::end()    //?
+Iterator<T> List<T>::end()
 {
-    return Iterator<T>(nullptr);
+    return Iterator<T>(nullptr);    //Because apparently this is how they do it!? Seems useless to me
 }
 
 template <class T>
@@ -156,7 +158,7 @@ unsigned int List<T>::size()
 }
 
 template <class T>
-void List<T>::PrintList()   //Not how I would have displayed it, but what the example had, just btw
+void List<T>::PrintList()   //Not how I would have displayed it, but this is what the example had, just btw
 {
     Node<T>* temp = this->head;
     while(temp != nullptr)

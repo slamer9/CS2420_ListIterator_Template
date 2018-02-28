@@ -16,7 +16,6 @@
 // have not used any function or data-structure from the Standard-Template Library. I understand that any
 // violation of this disclaimer will result in a 0 for the project.
 // ---------------------------------------------------------------------------
-
 #include <iostream>
 #include <string>
 #include "List.h"
